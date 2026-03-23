@@ -1,0 +1,64 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Stores user-specific settings and metadata.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The unique identifier for the user." },
+        "email": { "type": "string", "format": "email", "description": "The user's email address." },
+        "displayName": { "type": "string", "description": "The user's display name." },
+        "photoURL": { "type": "string", "format": "uri", "description": "The user's profile picture URL." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the profile was created." }
+      },
+      "required": ["uid", "email"]
+    },
+    "AnimationGuide": {
+      "title": "Animation Guide",
+      "description": "A generated guide for a PowerPoint animation.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique ID for the guide." },
+        "userId": { "type": "string", "description": "The ID of the user who owns this guide." },
+        "title": { "type": "string", "description": "The title of the animation." },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": { "type": "string" },
+              "description": { "type": "string" },
+              "screenshotPrompt": { "type": "string" }
+            }
+          }
+        },
+        "refinementTips": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "youtubeReferences": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": { "type": "string" },
+              "url": { "type": "string" }
+            }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the guide was generated." }
+      },
+      "required": ["id", "userId", "title", "steps", "refinementTips", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile documents."
+    },
+    "/guides/{guideId}": {
+      "schema": "AnimationGuide",
+      "description": "Animation guide documents."
+    }
+  }
+}
