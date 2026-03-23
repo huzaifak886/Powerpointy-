@@ -1,7 +1,8 @@
 {
+  "description": "Professional guide to cinematic PowerPoint animations and transitions. Learn how to create stunning presentations with AI-powered guides and YouTube tutorial references.",
   "name": "Powerpointy",
   "short_name": "Powerpointy",
-  "description": "Professional guide to cinematic PowerPoint animations.",
+  "lang": "en-US",
   "dir": "ltr",
   "display": "standalone",
   "orientation": "any",
@@ -9,6 +10,10 @@
   "start_url": "/",
   "background_color": "#ffffff",
   "theme_color": "#4f46e5",
+  "categories": [
+    "productivity",
+    "education"
+  ],
   "icons": [
     {
       "src": "https://picsum.photos/seed/slideanimator/192/192",
@@ -21,6 +26,22 @@
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://picsum.photos/seed/slideanimator/1920/1080",
+      "sizes": "1920x1080",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "Desktop View"
+    },
+    {
+      "src": "https://picsum.photos/seed/slideanimator/1080/1920",
+      "sizes": "1080x1920",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Mobile View"
     }
   ],
   "id": "com.powerpointy.main"
