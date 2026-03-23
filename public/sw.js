@@ -2,7 +2,7 @@ const CACHE_NAME = 'slideanimator-v1';
 const ASSETS = [
   '/',
   '/index.html',
-  'manifest.json'
+  '/manifest.json'
 ];
 
 self.addEventListener('install', (event) => {
