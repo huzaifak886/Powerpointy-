@@ -141,6 +141,30 @@ export default function App() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const [showTips, setShowTips] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [showInstallBanner, setShowInstallBanner] = useState(false);
+
+  // PWA Install Prompt
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setShowInstallBanner(true);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      setDeferredPrompt(null);
+      setShowInstallBanner(false);
+    }
+  };
 
   // Auth Listener
   useEffect(() => {
@@ -288,7 +312,7 @@ export default function App() {
 
   if (!isAuthReady) {
     return (
-      <div className="flex flex-col h-screen max-w-md mx-auto bg-zinc-950 items-center justify-center">
+      <div className="flex flex-col h-screen w-full md:max-w-md md:mx-auto bg-zinc-950 items-center justify-center pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
         <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
       </div>
     );
@@ -296,7 +320,7 @@ export default function App() {
 
   if (!user) {
     return (
-      <div className="flex flex-col h-screen max-w-md mx-auto bg-zinc-950 shadow-2xl overflow-hidden font-sans border-x border-zinc-800 text-zinc-100">
+      <div className="flex flex-col h-screen w-full md:max-w-md md:mx-auto bg-zinc-950 shadow-2xl overflow-hidden font-sans md:border-x border-zinc-800 text-zinc-100 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
         <div className="flex-1 flex flex-col p-8 justify-center space-y-12">
           <div className="space-y-4 text-center">
             <div className="w-20 h-20 bg-indigo-600 rounded-3xl flex items-center justify-center mx-auto shadow-2xl shadow-indigo-900/40">
@@ -334,7 +358,7 @@ export default function App() {
   }
 
   return (
-    <div className="flex flex-col h-screen max-w-md mx-auto bg-zinc-950 shadow-2xl overflow-hidden font-sans border-x border-zinc-800 text-zinc-100">
+    <div className="flex flex-col h-screen w-full md:max-w-md md:mx-auto bg-zinc-950 shadow-2xl overflow-hidden font-sans md:border-x border-zinc-800 text-zinc-100 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
       {/* Header */}
       <header className="px-6 py-4 border-b border-zinc-800 flex items-center justify-between bg-zinc-950/80 backdrop-blur-md sticky top-0 z-50">
         <div className="flex items-center gap-3">
@@ -373,7 +397,42 @@ export default function App() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-hidden relative">
+      <main className="flex-1 overflow-hidden relative flex flex-col">
+        <AnimatePresence>
+          {showInstallBanner && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="bg-indigo-600/10 border-b border-indigo-500/20 px-6 py-3 flex items-center justify-between"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center shrink-0">
+                  <Sparkles className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-zinc-100">Install SlideAnimator</p>
+                  <p className="text-[10px] text-zinc-400">Add to home screen for a native experience</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleInstallClick}
+                  className="px-3 py-1.5 bg-indigo-600 text-white text-[10px] font-bold rounded-lg hover:bg-indigo-500 transition-colors"
+                >
+                  Install
+                </button>
+                <button
+                  onClick={() => setShowInstallBanner(false)}
+                  className="p-1.5 text-zinc-500 hover:text-zinc-300 transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <AnimatePresence mode="wait">
           {view === 'home' && (
             <motion.div 
@@ -669,6 +728,28 @@ export default function App() {
                       </p>
                     </button>
                   ))}
+
+                  <div className="mt-8 p-6 rounded-3xl bg-indigo-600/10 border border-indigo-500/20 space-y-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center">
+                        <Settings className="w-5 h-5 text-white" />
+                      </div>
+                      <h4 className="font-bold text-zinc-100">Mobile App</h4>
+                    </div>
+                    <p className="text-xs text-zinc-400 leading-relaxed">
+                      Install SlideAnimator on your phone for full-screen access and offline viewing.
+                    </p>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-[10px] text-zinc-500">
+                        <div className="w-1 h-1 rounded-full bg-indigo-500" />
+                        <span>iOS: Tap Share <ExternalLink className="w-2 h-2 inline" /> then "Add to Home Screen"</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[10px] text-zinc-500">
+                        <div className="w-1 h-1 rounded-full bg-indigo-500" />
+                        <span>Android: Tap Menu then "Install App"</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
             </motion.div>
