@@ -326,7 +326,7 @@ export default function App() {
             <div className="w-20 h-20 bg-indigo-600 rounded-3xl flex items-center justify-center mx-auto shadow-2xl shadow-indigo-900/40">
               <Sparkles className="w-10 h-10 text-white" />
             </div>
-            <h1 className="text-4xl font-black tracking-tight">SlideAnimator</h1>
+            <h1 className="text-4xl font-black tracking-tight">Powerpointy</h1>
             <p className="text-zinc-400 text-sm leading-relaxed max-w-[240px] mx-auto">
               The professional guide to cinematic PowerPoint animations.
             </p>
@@ -374,7 +374,7 @@ export default function App() {
               <Sparkles className="w-5 h-5 text-white" />
             </div>
           )}
-          <h1 className="font-bold text-lg tracking-tight">SlideAnimator AI</h1>
+          <h1 className="font-bold text-lg tracking-tight">Powerpointy</h1>
         </div>
         <div className="flex items-center gap-1">
           <button 
@@ -411,7 +411,7 @@ export default function App() {
                   <Sparkles className="w-4 h-4 text-white" />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-zinc-100">Install SlideAnimator</p>
+                  <p className="text-xs font-bold text-zinc-100">Install Powerpointy</p>
                   <p className="text-[10px] text-zinc-400">Add to home screen for a native experience</p>
                 </div>
               </div>
@@ -734,10 +734,10 @@ export default function App() {
                       <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center">
                         <Settings className="w-5 h-5 text-white" />
                       </div>
-                      <h4 className="font-bold text-zinc-100">Mobile App</h4>
+                      <h4 className="font-bold text-zinc-100">Powerpointy</h4>
                     </div>
                     <p className="text-xs text-zinc-400 leading-relaxed">
-                      Install SlideAnimator on your phone for full-screen access and offline viewing.
+                      Install Powerpointy on your phone for full-screen access and offline viewing.
                     </p>
                     <div className="space-y-2">
                       <div className="flex items-center gap-2 text-[10px] text-zinc-500">
